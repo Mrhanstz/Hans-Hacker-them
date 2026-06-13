@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# HANS HACKER THEME - COMPLETE UNINSTALLER
+# HANS HACKER THEME - UNINSTALLER
 clear
 
 RED='\033[0;31m'
@@ -18,29 +18,42 @@ BANNER
 echo -e "${NC}"
 
 echo -e "${YELLOW}This will delete:${NC}"
-echo "  • All AI memories and history"
-echo "  • Theme configuration"
-echo "  • Permanent storage files"
+echo "  • All AI memories and chat history"
+echo "  • Theme configuration files"
+echo "  • Permanent storage directories"
 echo ""
+
 echo -e "${RED}Are you sure you want to uninstall? (y/n): ${NC}"
 read -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "${YELLOW}Removing all files...${NC}"
+    echo -e "${YELLOW}Removing HANS HACKER THEME...${NC}"
     
-    # Delete main directory
+    # Remove main directory
     rm -rf ~/.hans_hacker
+    echo -e "${GREEN}✓ Removed ~/.hans_hacker/${NC}"
+    
+    # Remove old files
+    rm -f ~/.hans_ai_state 2>/dev/null
+    rm -f ~/.hans_ai_memory.txt 2>/dev/null
+    rm -f ~/.hans_ai_history.txt 2>/dev/null
+    rm -f ~/.hans_ai.sh 2>/dev/null
+    rm -f ~/.hans_theme.sh 2>/dev/null
     
     # Remove from .bashrc
     sed -i '/hans_hacker/d' ~/.bashrc
+    sed -i '/HANS HACKER/d' ~/.bashrc
+    sed -i '/command_not_found_handle/d' ~/.bashrc
+    echo -e "${GREEN}✓ Removed from .bashrc${NC}"
     
     # Remove welcome flag
-    rm -f ~/.hans_hacker_welcome
+    rm -f ~/.hans_hacker_welcome 2>/dev/null
     
-    echo -e "${GREEN}✓ All files removed${NC}"
+    echo ""
     echo -e "${GREEN}✅ HANS HACKER THEME UNINSTALLED!${NC}"
-    echo -e "${YELLOW}Restart Termux to complete: exit then reopen${NC}"
+    echo ""
+    echo -e "${YELLOW}Please run: ${NC}exit${YELLOW} and reopen Termux${NC}"
 else
-    echo -e "${GREEN}Uninstall cancelled. Your memories are safe.${NC}"
+    echo -e "${GREEN}Uninstall cancelled${NC}"
 fi
